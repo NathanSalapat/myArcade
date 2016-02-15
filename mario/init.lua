@@ -7,6 +7,10 @@ dofile(minetest.get_modpath("mario").."/turtle.lua")
 dofile(minetest.get_modpath("mario").."/gamestate.lua")
 dofile(minetest.get_modpath("mario").."/hud.lua")
 
+minetest.register_privilege("myarcade", {
+	description = "Place arcade games",
+	give_to_singleplayer = false
+})
 
 minetest.register_node("mario:placer",{
 	description = "Mario",
@@ -24,8 +28,14 @@ minetest.register_node("mario:placer",{
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
 		mario.game_start(pos, player, {
 			schematic = minetest.get_modpath("mario").."/schems/mario.mts",
-			scorename = "mario:classic_board",
-		})
+			scorename = "mario:classic_board",})
+	end,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		if placer and minetest.check_player_privs(placer:get_player_name(), {myarcade = true}) then
+		else
+			minetest.remove_node(pos)
+			return true
+		end
 	end,
 })
 minetest.register_node("mario:placer2",{
@@ -44,6 +54,13 @@ minetest.register_node("mario:placer2",{
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
 		local schem = minetest.get_modpath("mario").."/schems/mario.mts"
 		minetest.place_schematic({x=pos.x-1,y=pos.y-1,z=pos.z-2},schem,0, "air", true)
+	end,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		if placer and minetest.check_player_privs(placer:get_player_name(), {myarcade = true}) then
+		else
+			minetest.remove_node(pos)
+			return true
+		end
 	end,
 })
 

@@ -23,3 +23,6 @@ If your score makes it into the highscore of the server your name will be regist
 
 * [DonBatman](https://github.com/DonBatman/)
 * [Ferk](https://github.com/Ferk/)
+
+### Note
+This forked version is specifically designed for servers. A privilege is required to place the nodes, by default singleplayer doesn't get it. If you aren't using this mod on a server just use the original version by Ferk. ~Nathan.S

@@ -101,7 +101,15 @@ minetest.register_node("pacmine:classic_board",{
 			scorename = "pacmine:classic_board",
 		})
 	end,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		if placer and minetest.check_player_privs(placer:get_player_name(), {myarcade = true}) then
+		else
+			minetest.remove_node(pos)
+			return true
+		end
+	end,
 })
+
 --The placer block for pacmine mini
 minetest.register_node("pacmine:mini_board",{
 	description = "Pacman Mini",
@@ -127,8 +135,14 @@ minetest.register_node("pacmine:mini_board",{
 			ghost_amount = 2,
 			speed = 1,
 			pellet_total = 91,
-			scorename = "pacmine:mini_board",
-		})
+			scorename = "pacmine:mini_board",})
+	end,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		if placer and minetest.check_player_privs(placer:get_player_name(), {myarcade = true}) then
+		else
+			minetest.remove_node(pos)
+			return true
+		end
 	end,
 })
 
